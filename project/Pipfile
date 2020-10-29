@@ -1,0 +1,20 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+flask = "*"
+flask-sqlalchemy = "*"
+pandas = "*"
+seaborn = "*"
+sklearn = "*"
+joblib = "*"
+scikit-learn = "*"
+scipy = "*"
+matplotlib = "*"
+
+[requires]
+python_version = "3.6"
