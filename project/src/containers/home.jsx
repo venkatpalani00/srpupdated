@@ -1,5 +1,5 @@
 import React,{useState, useLayoutEffect} from 'react'
-import {Button, Segment, Form,Popup,Grid,Radio,Input,Label,Image,Rail} from 'semantic-ui-react'
+import {Button, Segment, Form,Popup,Grid,Radio,Input,Label,Image,Rail,Icon,Header } from 'semantic-ui-react'
 import {Redirect} from 'react-router-dom'
 import { useEffect } from 'react'
 import AliceCarousel from 'react-alice-carousel';
@@ -7,6 +7,7 @@ import "react-alice-carousel/lib/alice-carousel.css";
 import i1 from '../components/i1.jpg'
 import i2 from '../components/i2.jpg'
 import i3 from '../components/i3.jpg'
+import logo from '../components/logo.png'
 import Farm from '../containers/farm'
 
 const Home = (props) =>{
@@ -65,15 +66,16 @@ return (
     {
         lmsg==1?<div>Login failed...Try again</div>:''
     }
-    <Segment compact style={{fontSize:'20px',fontFamily:'monospace'}}>FARMERS GUIDE</Segment>
+     <Segment   style={{fontSize:'30px',fontFamily:'impact',color:'#0000A0'}}><Image src={logo} size='small' /><br/>FARMERS GUIDE</Segment>
     <Segment raised color='teal'>
-        <center>
-        <Button onClick={log}> LOGIN</Button>
-        <Button onClick={log1}>REGISTER</Button>
-        </center>
+    <left>
+        <Button onClick={log}  style={{fontSize:'20px',fontFamily:'Tahoma'}}color="inverted green"> LOGIN</Button>
+        <Button onClick={log1} style={{fontSize:'20px',fontFamily:'Tahoma'}}color="inverted orange" >REGISTER</Button>
+        </left>
+        <br/><br/>
     {fl==1?
         <center>
-            <Segment color='pink' container raised compact justify='center'>
+            <Segment inverted color='teal' color='pink' container raised compact justify='center'>
             <label>LOGIN</label>
             <Form>
                 <Form.Field>
@@ -130,20 +132,20 @@ return (
                     on='click'
                 >
                  <center><br/><br/><Segment container raised compact justify='center'>
-                        <Form>
-                        <Form.Field>
+                 <Form>
+                        <Form.Field><Icon name='user'/>
                         <label>Username</label>
                         <Input placeholder='UserName' value={user} onChange={e =>setUser(e.target.value)}/>
                         </Form.Field>
-                        <Form.Field>
+                        <Form.Field><Icon name='lock'/>
                         <label>Password</label>
                         <Input type='password' placeholder='Password' value={password} onChange={e => setPass(e.target.value)}/>
                         </Form.Field>
-                        <Form.Field>
+                        <Form.Field><Icon name='phone'/>
                         <label>Phone Number</label>
                         <Input placeholder='Phone number' value={phone} onChange={e => setPhone(e.target.value)}/>
                         </Form.Field>
-                        <Form.Field>
+                        <Form.Field><Icon name='envelope'/>
                         <label>E-mail</label>
                         <Input placeholder='E-mail' type="mail" value={mail} onChange={e => setMail(e.target.value)}/>
                         </Form.Field>
@@ -191,20 +193,20 @@ return (
                     on='click'
                 >
                  <center><br/><br/><Segment container raised compact justify='center'>
-                        <Form>
-                        <Form.Field>
+                 <Form>
+                        <Form.Field><Icon name='user'/>
                         <label>Username</label>
                         <Input placeholder='UserName' value={user} onChange={e =>setUser(e.target.value)}/>
                         </Form.Field>
-                        <Form.Field>
+                        <Form.Field><Icon name='lock'/>
                         <label>Password</label>
                         <Input type='password' placeholder='Password' value={password} onChange={e => setPass(e.target.value)}/>
                         </Form.Field>
-                        <Form.Field>
+                        <Form.Field><Icon name='phone'/>
                         <label>Phone Number</label>
                         <Input placeholder='Phone number' value={phone} onChange={e => setPhone(e.target.value)}/>
                         </Form.Field>
-                        <Form.Field>
+                        <Form.Field><Icon name='envelope'/>
                         <label>E-mail</label>
                         <Input placeholder='E-mail' type="mail" value={mail} onChange={e => setMail(e.target.value)}/>
                         </Form.Field>
@@ -252,16 +254,27 @@ return (
     <br />
     <Grid>
     <AliceCarousel autoPlay infinite autoPlayInterval='2000'>
-    <Image width='50px' src={i1} size='big' className="sliderimg"/>
+    <Image src={i1} size='big' className="sliderimg"/>
     <Image src={i2} size='big' className="sliderimg"/>
     <Image src={i3} size='big' className="sliderimg"/>
     </AliceCarousel>
     </Grid>        
-    <Segment>
+    
+    <Segment inverted color='green' style={{fontSize:'25px',fontFamily:'Georgia',color:'black'}}>
         <p>Agricuture is the backbone of India. But recently, crop production in India has very much declined. The major problem in agriculture is the overall decrease in the varieties of crops and livestock produced. In the early years of agriculture, farmers grew a wide variety of crops and raised many different types of livestock. Since the development of industrialized agriculture the number of different types of crops and livestock has decreased.
         In order to help the farmers to identify the most suitable crop for them to have most profit and have wide varieties of crops to be produced, we provide interface to do exactly that. </p>
     </Segment>
     </center>
+    <Segment inverted style={{fontSize:'25px',fontFamily:'Georgia'}}>
+      <center><Header as='h1' color='orange'>About us</Header></center><br /><br />
+      We the students of College of engineering, Guindy have created this website for the welfare of the farmers of our country<br /><br /> by suggesting the best crop for the farmers so that they are more profited.
+      <br /><br /><br />
+      Team:<br /><br />
+      Hrithik Karthikeyan, studying 3rd year at CEG<br /><br />
+      Venkat karthick, studying 3rd year at CEG<br /><br />
+      Veerasivaraman, studying 3rd year at CEG<br /> <br />
+    </Segment>
+    
     </div>
 )
 

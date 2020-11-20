@@ -1,7 +1,8 @@
 import React from 'react';
 import {useState,useEffect} from 'react'
-import {Form,Input,Button, Segment, Label, Grid, Icon} from 'semantic-ui-react';
+import {Form,Input,Button, Segment, Label, Grid, Icon,Image} from 'semantic-ui-react';
 import {Redirect} from 'react-router-dom'
+import logo from '../components/logo.png'
 import _ from 'lodash'
 
 const Farm = () =>{
@@ -16,7 +17,11 @@ const Farm = () =>{
 
     const [dat,setData]=useState([])
     const [far,setFar]=useState([]) 
+    const [ph,setPh]=useState(0)
     
+    const [phone,setP]=useState(0)
+    const [mail,setMail]=useState('')
+
     const [State_name,setStatename]=useState(0);
     const [District,setDistrict]=useState(0);
     const [Crop_sown,setCropsown]=useState(0);
@@ -59,6 +64,15 @@ const Farm = () =>{
         ))
     },[])    
 
+    useEffect(()=>{
+        fetch('/phone').then(response => response.json().then(
+            data=>{
+                setPh(data)
+                console.log(data)
+            }
+        ))
+    },[])    
+
     const fun = () =>{
         sessionStorage.removeItem('mine')
         setL(1);
@@ -71,8 +85,10 @@ const Farm = () =>{
             }
     hi {sessionStorage.getItem('mine')}
     <center>
-    <Button style={{float:'right'}} onClick={fun}>LOGOUT</Button><br /><br />
-    <Label style={{fontSize:'15px'}}>SELL YOUR CROPS</Label><br /><br />
+    <Image src={logo} size='small'/>
+    <Segment  style={{fontSize:'30px',fontFamily:'impact',color:'#0000A0'}}>FARMERS GUIDE</Segment>
+    <Button style={{float:'right'}} onClick={fun} color="inverted red">LOGOUT</Button><br /><br />
+    <Label raised rectangle container color='deep pink' justify='center' style={{fontSize:'20px'}}>SELL YOUR CROPS</Label><br /><br />
     <Form>
         <Form.Field width={6} >
             <Input label='Crop Name' size='small' placeholder="Crop name" value={crop} onChange={e=>setCrop(e.target.value)}/>
@@ -84,6 +100,7 @@ const Farm = () =>{
             <Input label="Quantity" placeholder="Quantity" value={quantity} onChange={e=>setQuan(e.target.value)}/>
         </Form.Field>
         <Form.Field>
+    
         <Button
             onClick={
                 async()=>{
@@ -120,13 +137,12 @@ const Farm = () =>{
     <Grid.Column>
     <center><Label color='violet' style={{fontSize:'15px'}}>SEE ORDERS FOR YOU</Label></center>
     {
-    
     <Segment color='teal' inverted raised style={{overflow: 'auto', maxHeight: 250 }}>
         {   count==1?
             dat.map((dat,ind)=>
             <div>
             {
-            dat['fname']== sessionStorage.getItem('mine')?
+            dat['fname']== sessionStorage.getItem('mine') && ph!=0?
             <center>
                 <Segment raised circular container color='orange' justify='center'>
                     <Grid columns='equal'>
@@ -137,6 +153,10 @@ const Farm = () =>{
                         <Grid.Row>
                     <Grid.Column>Quantity wanted : {dat['quantity']}</Grid.Column>
                    <Grid.Column> Customer name: {_.capitalize(dat['cus_name'])}</Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row>
+                    <Grid.Column>Customer Contact Number : {ph[dat['cus_name']]['phone']}</Grid.Column>
+                   <Grid.Column> Customer Mail ID : {ph[dat['cus_name']]['mail']}</Grid.Column>
                     </Grid.Row>
                     </Grid>
                 </Segment>
@@ -198,12 +218,13 @@ const Farm = () =>{
             <Input label='Season' placeholder="Enter Season" value={Season} onChange={e=>setSeason(e.target.value)}/>
         </Form.Field>
         <Form.Field  width={6} >
-            <Input placeholder="area" label="Area" value={Area} onChange={e=>setArea(e.target.value)}/>
+            <Input placeholder="area" label="Area(in acres)" value={Area} onChange={e=>setArea(e.target.value)}/>
         </Form.Field>
     <Form.Field>
         <Button
             onClick={
                 async()=>{
+                    setFl1(2)
                     const farm=sessionStorage.getItem('mine');
                     const use={State_name,District,Crop_sown,Season,Area};
                     const response = await fetch("/ml",{
@@ -216,7 +237,8 @@ const Farm = () =>{
                     if(response.ok){
                        response.json().then(
                            data=>{
-                               setPredict(data[0])
+                               console.log(data);
+                               setPredict(data)
                                setFl1(1)
                            }
                        )
@@ -229,8 +251,14 @@ const Farm = () =>{
     </Form>
     {
         fl1==1?
-    <h1>Production is expected to be {predict} /hectare</h1>
-        :''
+        <h1>
+        <Segment raised container compact color='violet' justify='center'>
+        <Label as='a' color='red' >YOUR RESULTS</Label>
+        <h1>Production is expected to be {predict["production"]} tons</h1>
+        </Segment>
+    <Segment raised container compact color='violet' justify='center'>{predict["IsGood"]==0?<h3>Your crop is not good.<br />Suggested crop is <h2 style={{fontFamily:'Georgia',color:'violet'}}>{predict["BestCrop"]}</h2></h3> :<h3>Your crop is a better crop.</h3>}</Segment>
+        </h1>
+        :fl1==2?<h1>This will take some time...PLEASE WAIT</h1>:''
     }
     </center>
     </div>
