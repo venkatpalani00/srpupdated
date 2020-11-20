@@ -3,7 +3,7 @@
 
 Temporary project to checkin codes written by interns
 
-go into project_intern and run 'npm install' to download node modules
+go into project and run 'npm install' to download node modules
 
 then come out of project_intern and run 'docker-compose build' and 'docker-compose up'...to run the entire project.
 =======
