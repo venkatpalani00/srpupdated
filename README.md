@@ -1,12 +1,5 @@
-<<<<<<< HEAD
-# MIT Interns Temp
+**A Machine learning project to predict the best crop for the farmer.**
 
-Temporary project to checkin codes written by interns
+I used Random forest regressor model to predit the best crop for the area based on the inputs like area of production, region, type of crop and so on. I trained the model which suggests the estimated production of a particular crop for a particular region. If the suggested crop below par the average production for given area, I trained the model such that it tells the best crop for that area.
 
-go into project and run 'npm install' to download node modules
-
-then come out of project_intern and run 'docker-compose build' and 'docker-compose up'...to run the entire project.
-=======
-# Event_brand_relationship
-Project done in internship
->>>>>>> b8e54664ec91b1b4e25b9ab3b9691b151e180582
+I used ReactJs to build the dynamic web page. I used python flask which serves as a backend and stored the data in sqlite database.
